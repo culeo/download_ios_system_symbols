@@ -1,0 +1,2 @@
+# download_ios_system_symbols
+下载iOS各个版本系统的symbol
