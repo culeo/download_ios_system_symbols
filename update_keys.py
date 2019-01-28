@@ -5,7 +5,7 @@ import string
 import os
 import json
 
-orgin_path = os.path.split(os.path.realpath(__file__))[0] + "/google.json"
+orgin_path = os.path.split(os.path.realpath(__file__))[0] + "/Google.json"
 save_path = os.path.split(os.path.realpath(__file__))[0] + "/Keys.json"
 
 def update():
