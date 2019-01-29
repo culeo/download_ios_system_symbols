@@ -6,10 +6,11 @@ import os
 import requests
 
 url = 'https://raw.githubusercontent.com/culeo/download_ios_system_symbols/master/Keys.json'
-path = '~/Library/Developer/Xcode/iOS\ DeviceSupport'
+path = os.path.expanduser('~') + '/Library/Developer/Xcode/iOS DeviceSupport/'
 
 
 def run_cmd(cmds):
+    print cmds
     popen = subprocess.Popen(cmds, stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=1)
 
     # 重定向标准输出
@@ -23,9 +24,12 @@ def download(version, cache=False):
     json = requests.get(url, timeout=30).json()
     key = ''
     name = ''
+    system = ''
     for item in json:
         if item['version'] == version and (item['cache'] is cache):
             key = item['key'].encode('utf-8')
+            name = item['name']
+            system = item['system']
             break
     if key is '':
         print '未找到：' + version
@@ -35,14 +39,8 @@ def download(version, cache=False):
     run_cmd(['gdrive', 'download', key])
     print '下载完成'
     print '正在解压...'
-    run_cmd(['7z', 'e', name])
+    run_cmd(['7z', 'e', name, '-y', '-spf', '-o'+path])
     print '解压完成'
-    print '正在移动文件...'
-    run_cmd(['mv', '-f', name[:-3], path])
-    print '清理下载文件'
-    run_cmd(['rm', '-f', name])
-    print '完成'
-
 
 def usage():
     print("""

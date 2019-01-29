@@ -1,5 +1,5 @@
 # download_ios_system_symbols
-下载指定版本iOS系统的symbol，并且自动移动到 `~/Library/Developer/Xcode/iOS DeviceSupport` 目录。(由于资源在Google Drive，所以懂的...)
+下载指定版本iOS系统的symbol，并且自动解压到 `~/Library/Developer/Xcode/iOS DeviceSupport` 目录。(由于资源在Google Drive，所以懂的...)
 
 资源来自：[https://github.com/Zuikyo/iOS-System-Symbols](https://github.com/Zuikyo/iOS-System-Symbols)
 
