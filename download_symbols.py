@@ -7,7 +7,8 @@ import requests
 
 url = 'https://raw.githubusercontent.com/culeo/download_ios_system_symbols/master/Keys.json'
 path = os.path.expanduser('~') + '/Library/Developer/Xcode/iOS DeviceSupport/'
-
+cache_path = '/Symbols/System/Library/Caches/'
+cache_file_path = cache_path + 'com.apple.dyld'
 
 def run_cmd(cmds):
     print cmds
@@ -39,8 +40,18 @@ def download(version, cache=False):
     run_cmd(['gdrive', 'download', key])
     print '下载完成'
     print '正在解压...'
-    run_cmd(['7z', 'e', name, '-y', '-spf', '-o'+path])
+    if cache:
+        run_cmd(['7z', 'e', name, '-y', '-spf'])
+        base_path = os.path.split(os.path.realpath(__file__))[0] + '/' + name[:-3]
+        original_path = base_path + cache_file_path
+        target_path = path + system + ' (' + version + ')' + cache_path
+        run_cmd(['mkdir', '-p', target_path])
+        run_cmd(['cp', '-rf', original_path, target_path])
+        run_cmd(['rm', '-r', base_path])
+    else:
+        run_cmd(['7z', 'e', name, '-y', '-spf', '-o'+path])
     print '解压完成'
+
 
 def usage():
     print("""
