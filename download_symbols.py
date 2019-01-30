@@ -11,7 +11,6 @@ cache_path = '/Symbols/System/Library/Caches/'
 cache_file_path = cache_path + 'com.apple.dyld'
 
 def run_cmd(cmds):
-    print cmds
     popen = subprocess.Popen(cmds, stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=1)
 
     # 重定向标准输出
