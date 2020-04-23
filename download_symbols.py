@@ -83,6 +83,3 @@ def main():
         elif cmd in ("-v", "--version"):
             version = arg
     download(version, cache=cache)
-
-if __name__ == '__main__':
-    main()
