@@ -12,7 +12,9 @@ cache_path = '/Symbols/System/Library/Caches/'
 cache_file_path = cache_path + 'com.apple.dyld'
 
 def run_cmd(cmd):
-    os.system(' '.join(cmd))
+    cmd_str = ' '.join(cmd)
+    print cmd_str
+    os.system(cmd_str)
 
 def download(version, cache=False):
     print '搜索中...'
@@ -34,18 +36,25 @@ def download(version, cache=False):
     run_cmd(['gdrive', '--service-account', 'key.json', 'download', key, '--timeout', '0'])
     print '下载完成'
     print '正在解压...'
+    name = shell_quote(name)
+    print name
     if cache:
         run_cmd(['7z', 'e', name, '-y', '-spf'])
         base_path = os.path.split(os.path.realpath(__file__))[0] + '/' + name[:-3]
-        original_path = base_path + cache_file_path
-        target_path = path + system + ' (' + version + ')' + cache_path
+        original_path = shell_quote(base_path + cache_file_path)
+        target_path = shell_quote(path + system + ' (' + version + ')' + cache_path)
         run_cmd(['mkdir', '-p', target_path])
         run_cmd(['cp', '-rf', original_path, target_path])
         run_cmd(['rm', '-r', base_path])
     else:
-        run_cmd(['7z', 'e', name, '-y', '-spf', '-o'+path])
+        run_cmd(['7z', 'e', name, '-y', '-spf', '-o' + shell_quote(path)])
     print '解压完成'
 
+def shell_quote(s):
+    """
+    转义字符串
+    """
+    return "'" + s.replace("'", "'\\''") + "'"
 
 def usage():
     print("""
