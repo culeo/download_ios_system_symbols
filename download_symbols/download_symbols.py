@@ -4,20 +4,15 @@ import getopt
 import subprocess
 import os
 import requests
+import time
 
 url = 'https://raw.githubusercontent.com/culeo/download_ios_system_symbols/master/Keys.json'
 path = os.path.expanduser('~') + '/Library/Developer/Xcode/iOS DeviceSupport/'
 cache_path = '/Symbols/System/Library/Caches/'
 cache_file_path = cache_path + 'com.apple.dyld'
 
-def run_cmd(cmds):
-    popen = subprocess.Popen(cmds, stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=1)
-
-    # 重定向标准输出
-    while popen.poll() is None:
-        r = popen.stdout.readline().decode("gbk")
-        sys.stdout.write(r)
-
+def run_cmd(cmd):
+    os.system(' '.join(cmd))
 
 def download(version, cache=False):
     print '搜索中...'
@@ -36,7 +31,7 @@ def download(version, cache=False):
         return
     print '找到文件：' + key
     print '下载中...'
-    run_cmd(['gdrive', '--service-account', 'key.json', 'download', key])
+    run_cmd(['gdrive', '--service-account', 'key.json', 'download', key, '--timeout', '0'])
     print '下载完成'
     print '正在解压...'
     if cache:
