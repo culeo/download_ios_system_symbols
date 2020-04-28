@@ -20,6 +20,6 @@ setuptools.setup(
     ],
     python_requires='>=2.7',
     entry_points = {
-        'console_scripts': ['download-symbols=download_symbols:main'],
+        'console_scripts': ['download-symbols=download_symbols.download_symbols:main'],
     }
 )

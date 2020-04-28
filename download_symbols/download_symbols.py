@@ -36,7 +36,7 @@ def download(version, cache=False):
         return
     print '找到文件：' + key
     print '下载中...'
-    run_cmd(['gdrive', 'download', key])
+    run_cmd(['gdrive', '--service-account', 'key.json', 'download', key])
     print '下载完成'
     print '正在解压...'
     if cache:
